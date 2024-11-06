@@ -1,0 +1,45 @@
+<!-- Main Page (index.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Project Tracker</h1>
+
+    <!-- Form to Add Projects -->
+    <form id="project-form">
+        <label>Project Name: <input type="text" id="project-name" required></label>
+        <label>Assigned To: <input type="text" id="assigned-to" required></label>
+        <label>Assigned By: <input type="text" id="assigned-by" required></label>
+        <label>Assign Date: <input type="date" id="assign-date" required></label>
+        <label>Due Date: <input type="date" id="due-date" required></label>
+        <button type="button" onclick="addProject()">Add Project</button>
+    </form>
+
+    <button onclick="window.location.href='completed-tasks.html'">View Completed Tasks</button> <!-- Link to Completed Tasks Page -->
+
+    <table id="project-table">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Assigned To</th>
+                <th>Task Given By</th>
+                <th>Assign Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Project rows will go here -->
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
