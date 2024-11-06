@@ -1,5 +1,3 @@
-// script.js
-
 let projects = JSON.parse(localStorage.getItem('projects')) || []; // Load projects from localStorage or initialize empty array
 
 // Function to save projects to localStorage
@@ -7,6 +5,7 @@ function saveProjects() {
     localStorage.setItem('projects', JSON.stringify(projects));
 }
 
+// Function to add a new project
 function addProject() {
     const projectName = document.getElementById('project-name').value;
     const assignedTo = document.getElementById('assigned-to').value;
@@ -64,14 +63,17 @@ function renderProjects() {
                     <td>${subProject.assignDate}</td>
                     <td>${subProject.dueDate}</td>
                     <td>${subProject.status}</td>
-                    <td></td>
+                    <td>
+                        <button onclick="markSubProjectComplete(${project.id}, ${subProject.id})">${subProject.status === 'In Progress' ? 'Mark Complete' : 'Completed'}</button>
+                        <button onclick="deleteSubProject(${project.id}, ${subProject.id})">Delete</button>
+                    </td>
                 `;
             });
         }
     });
 }
 
-// Function to mark a project as complete and change button to "Edit"
+// Function to mark a project as complete
 function markComplete(projectId) {
     const project = projects.find(p => p.id === projectId);
     if (project) {
@@ -105,6 +107,7 @@ function addSubProject(projectId) {
         const subDueDate = prompt("Due Date:");
 
         const newSubProject = {
+            id: Date.now(), // Unique ID for sub-project
             name: subProjectName,
             assignedTo: subAssignedTo,
             taskGivenBy: subTaskGivenBy,
@@ -117,6 +120,25 @@ function addSubProject(projectId) {
         saveProjects();
         renderProjects();
     }
+}
+
+// Function to mark a sub-project as complete
+function markSubProjectComplete(projectId, subProjectId) {
+    const project = projects.find(p => p.id === projectId);
+    const subProject = project?.subProjects.find(s => s.id === subProjectId);
+    if (subProject) {
+        subProject.status = subProject.status === 'In Progress' ? 'Completed' : 'In Progress';
+        saveProjects();
+        renderProjects();
+    }
+}
+
+// Function to delete a sub-project
+function deleteSubProject(projectId, subProjectId) {
+    const project = projects.find(p => p.id === projectId);
+    project.subProjects = project.subProjects.filter(s => s.id !== subProjectId);
+    saveProjects();
+    renderProjects();
 }
 
 // Load and render projects on page load
