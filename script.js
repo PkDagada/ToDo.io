@@ -32,32 +32,28 @@ function addProject() {
 }
 
 // Function to render projects in the table
-function renderProjects() {
-    const projectTableBody = document.getElementById('project-table').getElementsByTagName('tbody')[0];
-    projectTableBody.innerHTML = ''; // Clear the table before re-rendering
-
-    projects.forEach(project => {
-        const row = projectTableBody.insertRow();
-        row.innerHTML = `
-            <td>${project.name}</td>
-            <td>${project.assignedTo}</td>
-            <td>${project.taskGivenBy}</td>
-            <td>${project.assignDate}</td>
-            <td>${project.dueDate}</td>
-            <td>${project.status}</td>
-            <td>
-                <button onclick="markComplete(${project.id})">${project.status === 'In Progress' ? 'Mark Complete' : 'Edit'}</button>
-                <button onclick="deleteTask(${project.id})">Delete Task</button>
-                <button onclick="addSubProject(${project.id})">Add Sub-Project</button>
-            </td>
-        `;
+projects.forEach(project => {
+    const row = projectTableBody.insertRow();
+    row.innerHTML = `
+        <td class="project-name">${project.name}</td> <!-- Adding class for main project name -->
+        <td>${project.assignedTo}</td>
+        <td>${project.taskGivenBy}</td>
+        <td>${project.assignDate}</td>
+        <td>${project.dueDate}</td>
+        <td>${project.status}</td>
+        <td>
+            <button onclick="markComplete(${project.id})">${project.status === 'In Progress' ? 'Mark Complete' : 'Edit'}</button>
+            <button onclick="deleteTask(${project.id})">Delete Task</button>
+            <button onclick="addSubProject(${project.id})">Add Sub-Project</button>
+        </td>
+    `;
 
         // Render sub-projects, if any
         if (project.subProjects.length > 0) {
             project.subProjects.forEach(subProject => {
                 const subRow = projectTableBody.insertRow();
                 subRow.innerHTML = `
-                    <td style="padding-left: 20px;">- ${subProject.name}</td>
+                    <td style="padding-left: 20px;">- ${subProject.name}</td> <!-- No bold class for sub-projects -->
                     <td>${subProject.assignedTo}</td>
                     <td>${subProject.taskGivenBy}</td>
                     <td>${subProject.assignDate}</td>
@@ -71,7 +67,6 @@ function renderProjects() {
             });
         }
     });
-}
 
 // Function to mark a project as complete
 function markComplete(projectId) {
